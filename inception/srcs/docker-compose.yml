@@ -1,0 +1,63 @@
+version: "3"
+
+services:
+  nginx:
+    image: nginx
+    build:
+      context: ./requirements/nginx
+    container_name: nginx
+    ports:
+      - $NGINX_PORT:$NGINX_PORT
+    volumes:
+      - wordpress_data:/var/www/html
+    restart: on-failure
+    networks:
+      - intra
+    depends_on:
+      - wordpress
+    env_file:
+      - .env
+  mariadb:
+    image: mariadb
+    build:
+      context: ./requirements/mariadb
+    container_name: mariadb
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    restart: on-failure
+    networks:
+      - intra
+    env_file:
+      - .env
+  wordpress:
+    image: wordpress
+    build: 
+      context: ./requirements/wordpress
+    container_name: wordpress
+    volumes:
+      - wordpress_data:/var/www/html
+    restart: on-failure
+    networks:
+      - intra
+    depends_on:
+      - mariadb
+    env_file:
+      - .env
+
+volumes:
+  wordpress_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/jaehjoo/data/wordpress
+      o: bind
+  mariadb_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/jaehjoo/data/mariadb
+      o: bind
+
+networks:
+  intra:
+    driver: bridge
