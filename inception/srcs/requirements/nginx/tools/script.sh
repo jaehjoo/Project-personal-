@@ -1,15 +1,15 @@
 #!/bin/sh
 
 echo "set nginx configure"
-sed -i "s/listen ssl;/listen ${NGINX_PORT} ssl;/g" /etc/nginx/nginx.conf
-sed -i "s/listen \[::\]: ssl;/listen \[::\]:${NGINX_PORT} ssl;/g" /etc/nginx/nginx.conf
-sed -i "s/ssl_certificate;/ssl_certificate ${SSL_CRT};/g" /etc/nginx/nginx.conf
-sed -i "s/ssl_certificate_key;/ssl_certificate_key ${SSL_KEY};/g" /etc/nginx/nginx.conf
-sed -i "s/fastcgi_pass wordpress:/fastcgi_pass wordpress:${WP_PORT}/g" /etc/nginx/nginx.conf
+sed -i "s/listen s ssl;/listen ${NGINX_PORT} ssl;/g" /etc/nginx/nginx.conf
+sed -i "s/listen \[::\]: s ssl;/listen \[::\]:${NGINX_PORT} ssl;/g" /etc/nginx/nginx.conf
+sed -i "s/ssl_certificate s;/ssl_certificate ${SSL_CRT};/g" /etc/nginx/nginx.conf
+sed -i "s/ssl_certificate_key s;/ssl_certificate_key ${SSL_KEY};/g" /etc/nginx/nginx.conf
+sed -i "s/fastcgi_pass wordpress:s/fastcgi_pass wordpress:${WP_PORT}/g" /etc/nginx/nginx.conf
 echo "complete nginx configure"
 
 echo "wait wordpress"
-/usr/local/bin/wait-for-it.sh $WP_HOST:$WP_PORT --timeout=15
+/usr/local/bin/wait-for-it.sh $WP_HOST:$WP_PORT --timeout=30
 echo "complete wordpress"
 
 echo "set openssl"

@@ -1,7 +1,7 @@
 #!/bin/sh
 
 echo "set wp port"
-sed -i "s/listen = 0.0.0.0:/listen = 0.0.0.0:${WP_PORT}/g" /etc/php82/php-fpm.d/www.conf
+sed -i "s/listen = 0.0.0.0:s/listen = 0.0.0.0:${WP_PORT}/g" /etc/php81/php-fpm.d/www.conf
 
 echo "wait to connect mariadb"
 /usr/local/bin/wait-for-it.sh $MARIADB_DB_HOST:$MARIADB_PORT --timeout=15

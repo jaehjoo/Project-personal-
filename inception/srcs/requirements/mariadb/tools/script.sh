@@ -1,7 +1,7 @@
 #!/bin/sh
 
 echo "set mariadb port"
-sed -i "s/port/port = ${MARIADB_PORT}/g" /etc/my.cnf
+sed -i "s/port s/port = ${MARIADB_PORT}/g" /etc/my.cnf
 
 echo "set mariadb basic info"
 if [ ! -d "/var/lib/mysql/mysql" ]; then
